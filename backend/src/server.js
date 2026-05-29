@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connect } from "mongoose";
-import connectDB from "./config/connect.mongo";
-import entryRoutes from "./routes/entry.route";
+import { connectDB } from "./config/connect.mongo.js";
+import entryRoutes from "./routes/entry.route.js";
+import { errorHandler } from "./middleware/error.handler.js";
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ async function startServer()
     await connectDB();
 
 
-    app.use("/api",entryRoutes)
+    app.use("/api",entryRoutes());
+    app.use(errorHandler);
     const PORT = process.env.PORT || 3000;
     app.listen(PORT,()=>
     {

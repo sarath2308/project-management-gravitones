@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-function entryRoutes()
+export function projectRoutes()
 {
     const router = Router();
 
@@ -8,5 +8,3 @@ function entryRoutes()
 
     return router;
 }
-
-export default entryRoutes;
