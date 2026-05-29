@@ -1,5 +1,5 @@
-import { verifyToken } from "../utils/jwt.js";
-import { AppError } from "../utils/AppError.js";
+import { Messages } from "../constant/message.js";
+import { verifyToken } from "../utils/token/token.service.js";
 
 export const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -9,7 +9,7 @@ export const authenticate = (req, res, next) => {
     !authHeader.startsWith("Bearer ")
   ) {
     return next(
-      new AppError("Unauthorized", 401)
+      new AppError(Messages.BAD_REQUEST, 401)
     );
   }
 
@@ -23,7 +23,7 @@ export const authenticate = (req, res, next) => {
     next();
   } catch (error) {
     next(
-      new AppError("Invalid or expired token", 401)
+      new AppError(Messages.INVALID_TOKEN, 401)
     );
   }
 };

@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/error/app.error.js";
 
 export const errorHandler = (err, req, res, next) => {
   console.error(`[ERROR] ${req.method} ${req.originalUrl}`);

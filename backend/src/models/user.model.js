@@ -15,13 +15,11 @@ const userSchema = new mongoose.Schema(
       required: [true, "Email is required"],
       unique: true,
       lowercase: true,
-      trim: true,
     },
 
     password: {
       type: String,
       required: [true, "Password is required"],
-      select: false,
     },
 
     role: {
@@ -35,6 +33,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
 
 export const User = mongoose.model("User", userSchema);
