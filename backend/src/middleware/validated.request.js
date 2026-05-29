@@ -1,4 +1,5 @@
 import { ZodError } from "zod";
+import { HttpStatus } from "../constant/http.status.js";
 
 export const validateRequest = (schema) => {
   return (req, res, next) => {
@@ -14,7 +15,7 @@ export const validateRequest = (schema) => {
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({
+        return res.status(HttpStatus.BAD_REQUEST).json({
           success: false,
           message: "Validation Error",
           errors: error.issues.map((issue) => ({

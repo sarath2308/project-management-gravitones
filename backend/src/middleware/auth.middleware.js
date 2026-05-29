@@ -1,19 +1,16 @@
+import { HttpStatus } from "../constant/http.status.js";
 import { Messages } from "../constant/message.js";
+import { AppError } from "../utils/error/app.error.js";
 import { verifyToken } from "../utils/token/token.service.js";
 
 export const authenticate = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.access_token;
 
-  if (
-    !authHeader ||
-    !authHeader.startsWith("Bearer ")
-  ) {
+  if (!token) {
     return next(
-      new AppError(Messages.BAD_REQUEST, 401)
+      new AppError(Messages.UNAUTHORIZED || "Unauthorized", HttpStatus.UNAUTHORIZED)
     );
   }
-
-  const token = authHeader.split(" ")[1];
 
   try {
     const decoded = verifyToken(token);
@@ -22,8 +19,8 @@ export const authenticate = (req, res, next) => {
 
     next();
   } catch (error) {
-    next(
-      new AppError(Messages.INVALID_TOKEN, 401)
+    return next(
+      new AppError(Messages.INVALID_TOKEN || "Invalid token", HttpStatus.UNAUTHORIZED)
     );
   }
 };

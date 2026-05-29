@@ -26,6 +26,10 @@ export const Messages = {
     PROJECT_CREATED: "Project created successfully",
     PROJECT_UPDATED: "Project updated successfully",  
     PROJECT_DELETED: "Project deleted successfully",
+    MEMBER_ADDED: "Member added to project successfully",
+    MEMBER_REMOVED: "Member removed from project successfully",
+    OWNER_CHANGED: "Project ownership transferred successfully",
+    PROJECT_NOT_FOUND: "Project not found",
     // Task related
     TASK_CREATED: "Task created successfully",
     TASK_UPDATED: "Task updated successfully",  

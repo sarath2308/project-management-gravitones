@@ -1,3 +1,5 @@
+import { HttpStatus } from "../constant/http.status.js";
+
 export class AuthController
 {
     constructor(authService)
@@ -10,7 +12,7 @@ export class AuthController
         const { name, email, password } = req.validated.body;
         const { user, token } = await this.authService.register({ name, email, password });
         res.cookie("access_token", token, { httpOnly: true, secure: false });
-        res.status(201).json({ user });
+        res.status(HttpStatus.CREATED).json({ user });
     }
 
     async login(req, res)
@@ -18,6 +20,6 @@ export class AuthController
         const { email, password } = req.validated.body;
         const { user, token } = await this.authService.login(email, password);
         res.cookie("access_token", token, { httpOnly: true, secure: false });
-        res.status(200).json({ user });
+        res.status(HttpStatus.OK).json({ user });
     }
 }
