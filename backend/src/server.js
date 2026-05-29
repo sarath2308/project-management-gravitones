@@ -5,6 +5,7 @@ import { connectDB } from "./config/connect.mongo.js";
 import entryRoutes from "./routes/entry.route.js";
 import { errorHandler } from "./middleware/error.handler.js";
 import cookieParser from "cookie-parser";
+import { apiLimiter } from "./middleware/ratelimit.middleware.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ async function startServer()
     //         credentials: true,
     //     }),
     // );
+    app.use(apiLimiter);
     app.use("/api",entryRoutes());
     app.use(errorHandler);
     const PORT = process.env.PORT || 3000;
