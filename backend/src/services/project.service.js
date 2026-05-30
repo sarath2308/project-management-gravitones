@@ -23,7 +23,11 @@ export class ProjectService {
   async getProjectsByUserId(userId) {
     return await this.projectRepository.findByUserId(userId);
   }
-  async addMember(projectId, userId) {
+  async addMember(projectId, requesterId, userId) {
+    const requester = await this.userRepository.findById(requesterId);
+    if (!requester) {
+      throw new AppError(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new AppError(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -33,13 +37,17 @@ export class ProjectService {
       throw new AppError(Messages.PROJECT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    if (project.owner.toString() !== userId.toString() && user.role !== 'admin') {
+    if (project.owner.toString() !== requesterId.toString() && requester.role !== 'admin') {
       throw new AppError(Messages.FORBIDDEN, HttpStatus.FORBIDDEN);
     }
     return await this.projectRepository.addMember(projectId, userId);
   }
 
-  async removeMember(projectId, userId) {
+  async removeMember(projectId, requesterId, userId) {
+    const requester = await this.userRepository.findById(requesterId);
+    if (!requester) {
+      throw new AppError(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new AppError(Messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -48,7 +56,7 @@ export class ProjectService {
     if (!project) {
       throw new AppError(Messages.PROJECT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
-    if (project.owner.toString() !== userId.toString() && user.role !== 'admin') {
+    if (project.owner.toString() !== requesterId.toString() && requester.role !== 'admin') {
       throw new AppError(Messages.FORBIDDEN, HttpStatus.FORBIDDEN);
     }
     return await this.projectRepository.removeMember(projectId, userId);

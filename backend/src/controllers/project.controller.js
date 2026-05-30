@@ -33,15 +33,17 @@ export class ProjectController {
   }
   async addMember(req, res) {
     const projectId = req.validated.params.projectId;
-    const userId = req.validated.body.userId;
-    await this.projectService.addMember(projectId, userId);
+    const userId = req.user.id;
+    const newUser = req.validated.body.userId;
+    await this.projectService.addMember(projectId, userId, newUser);
     res.status(HttpStatus.OK).json({ message: 'Member added successfully' });
   }
 
   async removeMember(req, res) {
     const projectId = req.validated.params.projectId;
-    const userId = req.validated.body.userId;
-    await this.projectService.removeMember(projectId, userId);
+    const userId = req.user.id;
+    const newUser = req.validated.body.userId;
+    await this.projectService.removeMember(projectId, userId, newUser);
     res.status(HttpStatus.OK).json({ message: 'Member removed successfully' });
   }
 

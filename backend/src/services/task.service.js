@@ -26,4 +26,8 @@ export class TaskService {
   async getTasksWithFilters(filters) {
     return await this.taskRepo.getTasksWithFilters(filters);
   }
+
+  async getProjectSummary(projectId) {
+    return await this.taskRepo.getProjectSummary(projectId);
+  }
 }

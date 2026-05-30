@@ -33,6 +33,7 @@ export class TaskController {
   async addComment(req, res) {
     const taskId = req.validated.params.id;
     const commentData = req.validated.body;
+    commentData.userId = req.user.id;
     const comment = await this.taskService.addComment(taskId, commentData);
     res.status(HttpStatus.CREATED).json(comment);
   }
@@ -41,5 +42,11 @@ export class TaskController {
     const filters = req.validated.query;
     const tasks = await this.taskService.getTasksWithFilters(filters);
     res.status(HttpStatus.OK).json(tasks);
+  }
+
+  async getProjectSummary(req, res) {
+    const projectId = req.validated.params.projectId;
+    const summary = await this.taskService.getProjectSummary(projectId);
+    res.status(HttpStatus.OK).json(summary);
   }
 }

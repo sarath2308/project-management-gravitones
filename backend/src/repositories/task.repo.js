@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export class TaskRepository {
   constructor(taskModel) {
     this.taskModel = taskModel;
@@ -35,7 +37,19 @@ export class TaskRepository {
     if (filters.projectId) {
       query.projectId = filters.projectId;
     }
-    return await this.taskModel.find(query).sort({ createdAt: -1 });
+
+    const sortField = filters.sortBy || 'createdAt';
+    const sortOption = { [sortField]: -1 };
+
+    const page = parseInt(filters.page, 10) || 1;
+    const limit = parseInt(filters.limit, 10) || 10;
+    const skip = (page - 1) * limit;
+
+    return await this.taskModel
+      .find(query)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
   }
 
   async getProjectSummary(projectId) {
