@@ -1,10 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-export function taskRoutes()
-{
-    const router = Router();
- 
+export function taskRoutes() {
+  const router = Router();
 
   return router;
-
 }

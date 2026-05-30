@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
 
@@ -24,7 +24,7 @@ const taskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Task title is required"],
+      required: [true, 'Task title is required'],
       trim: true,
       maxlength: 100,
     },
@@ -34,23 +34,27 @@ const taskSchema = new mongoose.Schema(
       trim: true,
       maxlength: 1000,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
 
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
+      ref: 'Project',
       required: true,
     },
 
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       default: null,
     },
 
     status: {
       type: String,
-      enum: ["todo", "in-progress", "done"],
-      default: "todo",
+      enum: ['todo', 'in-progress', 'done'],
+      default: 'todo',
     },
 
     comments: {
@@ -68,4 +72,4 @@ taskSchema.index({
   createdAt: -1,
 });
 
-export const Task = mongoose.model("Task", taskSchema);
+export const Task = mongoose.model('Task', taskSchema);

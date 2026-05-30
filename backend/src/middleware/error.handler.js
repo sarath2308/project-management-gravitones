@@ -1,6 +1,6 @@
-import { ZodError } from "zod";
-import { AppError } from "../utils/error/app.error.js";
-import { HttpStatus } from "../constant/http.status.js";
+import { ZodError } from 'zod';
+import { AppError } from '../utils/error/app.error.js';
+import { HttpStatus } from '../constant/http.status.js';
 
 export const errorHandler = (err, req, res, next) => {
   console.error(`[ERROR] ${req.method} ${req.originalUrl}`);
@@ -16,12 +16,12 @@ export const errorHandler = (err, req, res, next) => {
   if (err instanceof ZodError) {
     return res.status(HttpStatus.BAD_REQUEST).json({
       success: false,
-      message: err.errors.map((e) => e.message).join(", "),
+      message: err.errors.map((e) => e.message).join(', '),
     });
   }
 
   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
     success: false,
-    message: "Internal Server Error",
+    message: 'Internal Server Error',
   });
 };

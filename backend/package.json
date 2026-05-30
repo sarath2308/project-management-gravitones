@@ -7,8 +7,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -17,5 +19,8 @@
     "express": "^5.2.1",
     "mongoose": "^9.6.3",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
   }
 }

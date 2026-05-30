@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Project name is required"],
+      required: [true, 'Project name is required'],
       trim: true,
       maxlength: 100,
     },
@@ -17,7 +17,7 @@ const projectSchema = new mongoose.Schema(
 
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     isDeleted: {
@@ -28,7 +28,7 @@ const projectSchema = new mongoose.Schema(
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
   },
@@ -40,4 +40,4 @@ const projectSchema = new mongoose.Schema(
 projectSchema.index({ owner: 1 });
 projectSchema.index({ members: 1 });
 
-export const Project = mongoose.model("Project", projectSchema);
+export const Project = mongoose.model('Project', projectSchema);
